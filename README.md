@@ -1,8 +1,6 @@
 # Rack::Congestion
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rack/congestion`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Rack middleware for [Congestion](https://github.com/parrish/Congestion)
 
 ## Installation
 
@@ -22,13 +20,38 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### In a Rack application
+
+```ruby
+require 'rack/congestion'
+
+Congestion.default_options[:interval] = 60
+Congestion.default_options[:max_in_interval] = 100 # allow 100 requests / minute
+Congestion.default_options[:min_delay] = 0.1       # allow 1 request / 100 ms
+
+use Rack::Congestion::IpLimiter
+
+run ->(env){
+  [200, { 'Content-Type' => 'text/plain' }, ['Hello world']]
+}
+```
+
+### In a Rails application
+
+```ruby
+# config/application.rb
+require 'rack/congestion'
+
+class YourApplication < Rails::Application
+  config.middleware.use Rack::Congestion::IpLimiter
+end
+```
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To run the specs, run `bundle exec rake`.
 
 ## Contributing
 
