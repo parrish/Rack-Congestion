@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-RSpec::Matchers.define :delegate do |method_name, to: nil|
+RSpec::Matchers.define :delegate do |method_name, opts|
   match do |source|
+    to = opts[:to]
     target = source.send to
     allow(target).to receive method_name
     source.send method_name
