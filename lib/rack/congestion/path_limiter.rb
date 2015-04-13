@@ -9,7 +9,7 @@ module Rack
         super
       end
 
-      def call(env)
+      def _call(env)
         @env = env
         ignored? ? app.call(env) : super(env)
       end

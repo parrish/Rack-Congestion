@@ -6,6 +6,10 @@ RSpec.shared_examples_for 'a limiter' do
   let(:env){ Rack::MockRequest.env_for }
   let(:mocked_request){ double Rack::Congestion::Request }
 
+  before(:each) do
+    allow(limiter).to receive(:dup).and_return limiter
+  end
+
   it{ is_expected.to delegate :backoff, to: :request }
 
   describe '#rejected_response' do

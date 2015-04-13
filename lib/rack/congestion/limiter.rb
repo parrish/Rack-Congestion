@@ -10,6 +10,10 @@ module Rack
       end
 
       def call(env)
+        dup._call env
+      end
+
+      def _call(env)
         @env = env
         request.allowed? ? app.call(env) : rejected_response
       end
