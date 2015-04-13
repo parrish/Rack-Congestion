@@ -3,6 +3,8 @@ require 'spec_helper'
 RSpec.shared_examples_for 'a limiter' do
   include_context 'app helpers'
   subject{ limiter }
+  let(:env){ Rack::MockRequest.env_for }
+  let(:mocked_request){ double Rack::Congestion::Request }
 
   it{ is_expected.to delegate :backoff, to: :request }
 
@@ -20,7 +22,6 @@ RSpec.shared_examples_for 'a limiter' do
   end
 
   describe '#call' do
-    let(:mocked_request){ double Rack::Congestion::Request }
     let(:mock_request) do
       allow(Rack::Congestion::Request).to receive(:new).and_return mocked_request
       allow(mocked_request).to receive(:allowed?).and_return allowed
@@ -30,7 +31,7 @@ RSpec.shared_examples_for 'a limiter' do
       expect(Rack::Congestion::Request).to receive(:new)
         .with(kind_of(Hash), kind_of(Proc), kind_of(Hash))
         .and_call_original
-      limiter.call some: :options
+      limiter.call env
     end
 
     context 'when a request is allowed' do
@@ -38,18 +39,18 @@ RSpec.shared_examples_for 'a limiter' do
       before(:each){ mock_request }
 
       it 'should ensure the request is allowed' do
-        limiter.call Hash.new
+        limiter.call env
         expect(mocked_request).to have_received :allowed?
       end
 
       it 'should call through to the app' do
-        expect(limiter.app).to receive(:call).with Hash.new
-        limiter.call Hash.new
+        expect(limiter.app).to receive(:call).with env
+        limiter.call env
       end
 
       it 'should not reject the response' do
         expect(limiter).to_not receive :rejected_response
-        limiter.call Hash.new
+        limiter.call env
       end
     end
 
@@ -59,19 +60,19 @@ RSpec.shared_examples_for 'a limiter' do
 
       it 'should ensure the request is not allowed' do
         allow(limiter).to receive :rejected_response
-        limiter.call Hash.new
+        limiter.call env
         expect(mocked_request).to have_received :allowed?
       end
 
       it 'should not call through to the app' do
         allow(limiter).to receive :rejected_response
         expect(limiter.app).to_not receive :call
-        limiter.call Hash.new
+        limiter.call env
       end
 
       it 'should reject the response' do
         expect(limiter).to receive :rejected_response
-        limiter.call Hash.new
+        limiter.call env
       end
     end
   end
