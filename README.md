@@ -2,6 +2,8 @@
 
 Rack middleware for [Congestion](https://github.com/parrish/Congestion)
 
+Provides rate limiting for Rack-based applications.
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,16 +22,22 @@ Or install it yourself as:
 
 ## Usage
 
+The available limiters are:
+
+- `Rack::Congestion::Limiter`
+  - Application-wide limiting
+- `Rack::Congestion::IpLimiter`
+  - Limits requests per-IP
+
 ### In a Rack application
 
 ```ruby
 require 'rack/congestion'
 
-Congestion.default_options[:interval] = 60
-Congestion.default_options[:max_in_interval] = 100 # allow 100 requests / minute
-Congestion.default_options[:min_delay] = 0.1       # allow 1 request / 100 ms
-
-use Rack::Congestion::IpLimiter
+# Limit requests to
+#   - a maximum of 100 requests per minute
+#   - a maximum rate of 1 request every 100 milliseconds
+use Rack::Congestion::IpLimiter, interval: 60, max_in_interval: 100, min_delay: 0.1
 
 run ->(env){
   [200, { 'Content-Type' => 'text/plain' }, ['Hello world']]
