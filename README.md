@@ -28,6 +28,10 @@ The available limiters are:
   - Application-wide limiting
 - `Rack::Congestion::IpLimiter`
   - Limits requests per-IP
+- `Rack::Congestion::PathLimiter`
+  - Limits requests for a path segment
+  - e.g. limit requests to `'/api'`
+  - accepts `path:`(required) and `path_matcher:`(optional) options
 
 ### In a Rack application
 
