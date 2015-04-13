@@ -2,7 +2,7 @@ module Rack
   module Congestion
     class Limiter
       attr_accessor :app, :options
-      attr_reader :request
+      attr_reader :env
 
       def initialize(app, options = { })
         self.app = app
@@ -10,8 +10,12 @@ module Rack
       end
 
       def call(env)
-        @request = Rack::Congestion::Request.new env, key, options
+        @env = env
         request.allowed? ? app.call(env) : rejected_response
+      end
+
+      def request
+        @request ||= Rack::Congestion::Request.new env, key, options
       end
 
       def key

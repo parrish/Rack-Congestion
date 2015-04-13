@@ -15,7 +15,7 @@ RSpec.shared_examples_for 'a limiter' do
     describe 'headers' do
       subject{ limiter.rejected_response[1] }
       its(['Content-Type']){ is_expected.to eql 'text/plain; charset=utf-8' }
-      its(['Retry-After']){ is_expected.to be_a Fixnum }
+      its(['Retry-After']){ is_expected.to be_a(Fixnum).or match /\d+/ }
     end
   end
 
