@@ -4,6 +4,7 @@ CodeClimate::TestReporter.start
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'pry'
 require 'rspec/its'
+require 'rack/test'
 require 'timecop'
 require 'rack/congestion'
 Dir['./spec/support/**/*.rb'].sort.each{ |f| require f }
