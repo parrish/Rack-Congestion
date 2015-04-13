@@ -33,6 +33,8 @@ The available limiters are:
   - e.g. limit requests to `'/api'`
   - accepts `path:`(required) and `path_matcher:`(optional) options
 
+Examples and more advanced usage can be found in [examples](examples)
+
 ### In a Rack application
 
 ```ruby
