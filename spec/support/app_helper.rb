@@ -12,5 +12,9 @@ RSpec.shared_context 'app helpers' do
     Rack::Congestion::Limiter.new basic_app, limiter_options
   end
 
+  let(:ip_limited_app) do
+    Rack::Congestion::IpLimiter.new basic_app, limiter_options
+  end
+
   let(:app){ basic_app }
 end
