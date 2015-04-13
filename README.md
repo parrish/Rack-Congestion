@@ -1,5 +1,9 @@
 # Rack::Congestion
 
+[![Build Status](https://travis-ci.org/parrish/Rack-Congestion.svg?branch=master)](https://travis-ci.org/parrish/Rack-Congestion)
+[![Test Coverage](https://codeclimate.com/github/parrish/Rack-Congestion/badges/coverage.svg)](https://codeclimate.com/github/parrish/Rack-Congestion)
+[![Code Climate](https://codeclimate.com/github/parrish/Rack-Congestion/badges/gpa.svg)](https://codeclimate.com/github/parrish/Rack-Congestion)
+
 Rack middleware for [Congestion](https://github.com/parrish/Congestion)
 
 Provides rate limiting for Rack-based applications.
