@@ -39,6 +39,8 @@ The available limiters are:
 
 Examples and more advanced usage can be found in [examples](examples)
 
+[Documentation of Congestion configuration can be found here](https://github.com/parrish/Congestion#user-content-configuration)
+
 ### In a Rack application
 
 ```ruby
