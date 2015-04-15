@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/parrish/Rack-Congestion.svg?branch=master)](https://travis-ci.org/parrish/Rack-Congestion)
 [![Test Coverage](https://codeclimate.com/github/parrish/Rack-Congestion/badges/coverage.svg)](https://codeclimate.com/github/parrish/Rack-Congestion)
 [![Code Climate](https://codeclimate.com/github/parrish/Rack-Congestion/badges/gpa.svg)](https://codeclimate.com/github/parrish/Rack-Congestion)
+[![Gem Version](https://badge.fury.io/rb/rack-congestion.svg)](http://badge.fury.io/rb/rack-congestion)
 
 Rack middleware for [Congestion](https://github.com/parrish/Congestion)
 
